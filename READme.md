@@ -1,30 +1,24 @@
-# Face Detection and Feature Localization
+# Face Blurring in Video Feeds
 
 ## Project Overview
 
-This project detects faces in real-time video streams or images and localizes key facial features, specifically:
+This project captures a **live video feed** from a webcam or CCTV and automatically **detects and blurs all faces** in real-time. Additionally, it allows the user to **save a video clip** when required.
 
-* **Tip of the nose**
-* **Centers of the left and right eyes**
-
-The system annotates these features on the video feed. It uses **MediaPipe** for face detection and face mesh landmark localization.
+This is useful for **privacy protection**, surveillance masking, or anonymizing faces in video recordings.
 
 **Type of Computer Vision Problem:**
-This is a **Face Landmark Detection** problem, which falls under **object detection + keypoint localization**.
 
-**Justification:**
-
-* The model first detects faces (object detection).
-* Then it identifies precise facial landmarks (keypoint localization).
-* Each landmark (nose tip, eye centers) is represented by coordinates in the image, which is typical of a **keypoint regression task** in computer vision.
+* **Face Detection:** Detects faces using Haar cascades (object detection).
+* **Image Processing:** Applies Gaussian blur to detected face regions.
 
 ---
 
 ## File Structure
 
 ```
-├── face_detection_feature_localization.py   # Main Python script for real-time face detection
-└── README.md                                # Project overview and instructions
+├── face_blurring_video.py   # Main Python script for live face blurring
+├── requirements.txt         # Python dependencies
+└── README.md                # Project overview and instructions
 ```
 
 ---
@@ -34,32 +28,35 @@ This is a **Face Landmark Detection** problem, which falls under **object detect
 Install required packages:
 
 ```bash
-pip install opencv-python mediapipe
+pip install opencv-python
 ```
 
 Optional:
 
-* `numpy` (if additional numerical operations are needed)
+* `numpy` (usually installed with OpenCV)
 
 ---
 
 ## How to Run
 
-1. Open `face_detection_feature_localization.py` in your IDE or terminal.
-2. Ensure your webcam is connected (the script uses `cv2.VideoCapture(0)` for live feed).
+1. Open `face_blurring_video.py` in your IDE or terminal.
+2. Ensure your webcam is connected (default device `0`) or update the index for another camera.
 3. Run the script:
 
 ```bash
-python face_detection_feature_localization.py
+python face_blurring_video.py
 ```
 
-4. A window will appear showing:
+4. Functionality:
 
-   * **White bounding boxes** around detected faces
-   * **Green circle:** tip of the nose
-   * **Blue circles:** centers of the left and right eyes
+   * **Live Face Blurring:** Detected faces are blurred with a strong Gaussian blur.
+   * **Toggle Video Saving:**
 
-5. Press **ESC** to exit the application.
+     * Press **`s`** to start saving the processed video (`output.avi`).
+     * Press **`s`** again to stop saving.
+   * **Quit Application:** Press **`q`** to exit.
+
+5. The output video will match the live feed dimensions and display all detected faces blurred.
 
 ---
 
@@ -68,38 +65,35 @@ python face_detection_feature_localization.py
 * **Face Detection:**
 
 ```python
-face_results = face_detection.process(rgb)
+faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(60, 60))
 ```
 
-Detects faces and outputs bounding boxes.
+Detects faces in the grayscale frame using Haar cascade classifier.
 
-* **Facial Landmark Detection:**
+* **Blurring Faces:**
 
 ```python
-mesh_results = face_mesh.process(rgb)
+roi_blurred = cv2.GaussianBlur(roi, (99, 99), 30)
+frame[y:y+h, x:x+w] = roi_blurred
 ```
 
-Finds key landmarks like the nose tip and eye centers.
+Applies Gaussian blur to the region of interest containing the face.
 
-* **Annotation:**
+* **Video Saving:**
 
 ```python
-cv2.circle(frame, (int(nose.x * w), int(nose.y * h)), 6, (0, 255, 0), -1)
+out = cv2.VideoWriter("output.avi", fourcc, 20.0, (frame.shape[1], frame.shape[0]))
 ```
 
-Draws a circle on each landmark point for visualization.
+Initializes a video writer to save processed frames.
 
 ---
 
 ## Notes & Tips
 
-* Adjust `min_detection_confidence` in `FaceDetection` for more or less sensitive face detection.
-* The eye and nose landmarks use **MediaPipe’s 468-point mesh**, so specific indices correspond to different facial features.
-
-  * Nose tip: landmark `[1]`
-  * Left eye center: landmark `[33]`
-  * Right eye center: landmark `[263]`
-* For higher accuracy or multiple faces, you can refine the detection parameters or loop through multiple detected faces.
+* Adjust `scaleFactor`, `minNeighbors`, and `minSize` for better face detection in different lighting or camera setups.
+* Increase or decrease the **Gaussian blur kernel** `(99, 99)` for stronger or lighter face anonymization.
+* Ensure sufficient storage if saving long video clips.
+* Can be extended to multiple cameras or CCTV streams by changing the `VideoCapture` index or URL.
 
 ---
-
