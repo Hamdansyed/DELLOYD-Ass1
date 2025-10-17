@@ -1,97 +1,131 @@
-# License Plate Character Break Detection
+🚀 Computer Vision Projects Portfolio
+A collection of advanced computer vision applications demonstrating real-world problem solving with state-of-the-art models and techniques.
 
-## Project Overview
-This project detects **broken or damaged characters** on vehicle license plates from **front (FR)** and **rear (RE)** images or videos. It uses a **YOLO-based deep learning model** trained on labeled datasets sourced from **Roboflow**.  
+📋 Project 1: License Plate Damage Detection
+Overview
+Detects broken/damaged characters on license plates
 
-The system includes:  
-- A **training notebook** to preprocess data and train the model.  
-- A **GUI Python script** to perform real-time detection on images or videos.  
+YOLOv8 model trained on custom dataset
 
----
+Batch processing of images/videos
 
-## File Structure
-```
-├── train_model.ipynb           # Notebook to load, preprocess, and train the model
-├── detect_plate_damage.py      # GUI script for image/video inference
-├── dataset/                    # Folder containing Roboflow dataset (FR & RE images)
-├── runs/detect/train/weights/  # Folder to save trained YOLO weights
-├── requirements.txt            # Python dependencies
-└── README.md                   # Project overview and instructions
-```
+Cyberpunk-themed GUI
 
----
+Quick Run
+bash
+cd Q1_License_Plate_Detection/
+pip install ultralytics opencv-python pillow tkinter
+python code.py
+Key Features
+Upload single images or entire folders
 
-## Dependencies
-Install required packages with:
+Real-time damage classification
 
-```bash
-pip install -r requirements.txt
-```
+Confidence scoring
 
-Common packages:
-- `torch` / `torchvision`  
-- `ultralytics` (YOLO)  
-- `opencv-python`  
-- `Pillow`  
-- `numpy`  
-- `tkinter` (usually pre-installed with Python)  
+Video processing support
 
----
+👁️ Project 3: Face Feature Detection
+Overview
+Real-time facial landmark detection
 
-## Training the Model
+Locates nose tip & eye centers
 
-1. Open `train_model.ipynb` in **Jupyter Notebook** or **Google Colab**.
-2. Load your dataset from Roboflow by updating the dataset URL and API key.
-3. Run the notebook to:
-   - Preprocess and augment images  
-   - Load a pre-trained YOLO model  
-   - Train/fine-tune the model on your dataset  
-   - Save the trained weights (e.g., `best.pt`) in `runs/detect/train/weights/`
+468-point facial mesh
 
-> **Tip:** Ensure the dataset is properly labeled as `broken` and `non broken` for accurate detection.
+Clean, minimal interface
 
----
+Quick Run
+bash
+cd Q3_Face_Feature_Detection/
+pip install mediapipe opencv-python
+python code.py
+Key Features
+Live webcam processing
 
-## Running Inference (GUI)
+Precise anatomical landmark detection
 
-1. Open `detect_plate_damage.py`.
-2. Ensure the path to your trained model weights is correct:
+Face counting
 
-```python
-model = YOLO("runs/detect/train/weights/best.pt")
-```
+Performance metrics (FPS)
 
-3. Run the script:
+Problem Type: Facial Landmark Detection & Localization
 
-```bash
-python detect_plate_damage.py
-```
+🎥 Project 4: Real-time Face Blurring
+Overview
+Privacy protection in video feeds
 
-4. Use the GUI to:
-   - **Upload Image:** Select an image to detect broken/non-broken license plate characters.  
-   - **Upload Video:** Select a video to detect character damage frame by frame.  
+Real-time face detection & blurring
 
-5. Detection Results:
-   - **Red bounding box:** `broken`  
-   - **Green bounding box:** `non broken`  
-   - Labels include class and confidence score.
+Adjustable blur strength
 
-> **Screenshot Example:**  
-> *(Replace with an actual screenshot of your GUI)*  
-> ![GUI Example](path_to_screenshot.png)
+Video recording capabilities
 
----
+Quick Run
+bash
+cd Q4_Face_Blurring_Video/
+pip install opencv-python numpy
+python code.py
+Controls
+S/R: Start/stop recording
 
-## Notes & Tips
-- Ensure images/videos are clear and license plates are fully visible.  
-- Adjust YOLO parameters (`imgsz`, `conf`) and training hyperparameters as needed.  
-- The GUI resizes images to 600x400 px, but you can modify the code for different window sizes.  
-- You can extend the project to other vehicle datasets or different plate types.  
+B: Toggle blur on/off
 
----
++/-: Adjust blur strength
 
-## Example Workflow
-1. Train your model using `train_model.ipynb`.  
-2. Save trained weights as `best.pt`.  
-3. Launch `detect_plate_damage.py` to test new images/videos.  
+C: Screenshot
 
+Q/ESC: Quit
+
+Key Features
+Live webcam/CCTV processing
+
+Modern UI with statistics
+
+Multiple blur levels
+
+Timestamped recordings
+
+🐱🐶 Project 7: Cat vs Dog Classification
+Overview
+Pre-trained ResNet-50 (ImageNet)
+
+Professional GUI for batch analysis
+
+Misclassification analysis
+
+Confidence scoring
+
+Quick Run
+bash
+cd Q7_Cat_Dog_Classification/
+pip install torch torchvision pillow tkinter
+python code.py
+Key Features
+Batch image processing
+
+Detailed misclassification reports
+
+Performance statistics
+
+Export capabilities
+
+Research Focus: Transfer learning challenges in animal classification
+
+🛠️ System Requirements
+Python: 3.8+
+
+RAM: 4GB minimum, 8GB recommended
+
+Webcam: Required for Projects 3 & 4
+
+OS: Windows, MacOS, or Linux
+
+📞 Support
+For issues:
+
+Check camera permissions for real-time projects
+
+Ensure stable internet for model downloads
+
+Verify all dependencies are installed
